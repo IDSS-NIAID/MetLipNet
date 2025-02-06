@@ -2,7 +2,7 @@
  Includes functions to handle the preparation of untargeted metabolomics data for network visualization using the established igraph package.
 
 
-# RT Window Categorization with Overlapping Intervals
+## RT Window Categorization with Overlapping Intervals
 
 This repository provides a function to categorize data based on retention time (RT) using a sliding window approach with overlapping intervals.
 
