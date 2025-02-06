@@ -14,9 +14,6 @@ To install and use this function in your R environment:
 # Install dependencies if not already installed
 install.packages(c("dplyr", "tidyr"))
 
-# Source the function if not in an R package
-source("path/to/categorize_by_rt_window.R")  # Adjust path as needed
-
 
 library(dplyr)
 library(tidyr)
