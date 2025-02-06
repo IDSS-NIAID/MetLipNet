@@ -37,14 +37,19 @@ categorize_by_rt_window <- function(data, rt_col = "RT", mz_col = "mz", window_w
   max_rt <- max(data[[rt_col]], na.rm = TRUE)
   
   # Define the window breaks with overlap
-  window_starts <- seq(min_rt, max_rt, by = window_width - overlap)
+  window_starts <- seq(min_rt, max_rt - window_width, by = window_width - overlap)
   window_ends <- window_starts + window_width
   
-  # Assign each RT value to overlapping windows
-  data <- data %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(Window = list(which(data[[rt_col]] >= window_starts & data[[rt_col]] < window_ends))) %>%
-    tidyr::unnest(Window)
+  # Create a mapping of each RT value to its respective windows
+  expanded_data <- lapply(seq_along(window_starts), function(i) {
+    window_data <- data %>%
+      dplyr::filter(.data[[rt_col]] >= window_starts[i] & .data[[rt_col]] < window_ends[i]) %>%
+      dplyr::mutate(Window = i)
+    return(window_data)
+  })
   
-  return(data)
+  # Combine results into a single data frame
+  categorized_data <- dplyr::bind_rows(expanded_data)
+  return(categorized_data)
+
 }
