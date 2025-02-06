@@ -24,11 +24,33 @@ df <- data.frame(
   mz = rnorm(1000, mean = 200, sd = 50) + rnorm(1000, mean = 0, sd = 10) * runif(1000, min = 0.5, max = 1.5)
 )
 
-# Apply categorization function
-df_categorized <- categorize_by_rt_window(df, overlap = 0.1)
+# Apply categorization function with adjusted window overlap
+df_categorized <- categorize_by_rt_window(df, overlap = 0.5)
 
-# Display first 5 rows per RT window
+# Display first 3 rows per RT window
 df_categorized %>%
   group_by(Window) %>%
-  slice_head(n = 5) %>%
+  slice_head(n = 3) %>%
   print()
+
+
+## Expected Output
+
+The function will categorize data into overlapping retention time (RT) windows. Below is an example of the output:
+
+# A tibble: 3 × 3 per Window
+     RT    mz Window
+  <dbl> <dbl>  <int>
+1  0.50  201.     1
+2  1.23  189.     1
+3  1.87  210.     1
+
+4  2.78  205.     2
+5  3.12  198.     2
+6  3.98  215.     2
+
+7  4.87  220.     3
+8  5.33  190.     3
+9  5.79  195.     3
+...
+
