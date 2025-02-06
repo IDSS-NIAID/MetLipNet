@@ -4,7 +4,7 @@
 
 ## RT Window Categorization with Overlapping Intervals
 
-This repository provides a function to categorize data based on retention time (RT) using a sliding window approach with overlapping intervals.
+This function is used to categorize data based on retention time (RT) using a sliding window approach with overlapping intervals.
 
 ## Installation
 
