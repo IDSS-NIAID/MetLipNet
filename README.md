@@ -1,5 +1,5 @@
 # MetLipNet
- Includes functions to handle the preparation of untargeted metabolomics data for network visualization using the established igraph package.
+ Functions to handle the preparation of untargeted metabolomics data for network analysis.
 
 
 ## RT Window Categorization with Overlapping Intervals
