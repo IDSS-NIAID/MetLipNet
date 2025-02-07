@@ -1,4 +1,4 @@
-# Untargeted-Metabolomics-Network-Analysis
+# MetLipNet
  Includes functions to handle the preparation of untargeted metabolomics data for network visualization using the established igraph package.
 
 
