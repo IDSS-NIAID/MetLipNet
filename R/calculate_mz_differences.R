@@ -11,6 +11,7 @@
 #' @return A data frame containing pairwise m/z differences and detected molecular matches.
 #'
 #' @export
+#' @import dplyr
 calculate_mz_differences <- function(data, mz_col = "mz", window_col = "Window", selected_groups = NULL) {
   known_differences <- c(
     "17" = "Ammonia", "14" = "CH2", "28" = "Carbonyl", "58" = "Aldehyde", "60" = "Alcohol or Ether",
