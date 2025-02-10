@@ -42,6 +42,7 @@ df_categorized %>%
 ## Expected Output
 
 The `categorize_by_rt_window` function will categorize data into overlapping retention time (RT) windows. 
+
 Below is an example of the output:
 
 ```r
@@ -77,6 +78,7 @@ head(df_mz_differences_filtered)
 
 The `calculate_mz_differences` function calculates pairwise m/z differences within retention time windows,
 and matches the differences to selected chemical groups. 
+
 Below is an example of the output:
 
 ```r
