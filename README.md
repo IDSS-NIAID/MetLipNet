@@ -1,5 +1,5 @@
 # MetLipNet
- Functions to handle the preparation of untargeted metabolomics data for network analysis.
+Functions to handle the preparation of untargeted metabolomics data for network analysis.
 
 
 ## Installation
