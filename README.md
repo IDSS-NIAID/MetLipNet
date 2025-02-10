@@ -41,7 +41,8 @@ head(df_mz_differences_filtered)
 
 ## Expected Output
 
-The `categorize_by_rt_window` function will categorize data into overlapping retention time (RT) windows. Below is an example of the output:
+The `categorize_by_rt_window` function will categorize data into overlapping retention time (RT) windows. 
+Below is an example of the output:
 
 # A tibble: 3 × 3 per Window
      RT    mz Window
@@ -61,7 +62,9 @@ The `categorize_by_rt_window` function will categorize data into overlapping ret
 
 
 
-The `calculate_mz_differences` function calculates pairwise m/z differences within retention time windows and matches the differences to selected chemical groups. Below is an example of the output:
+The `calculate_mz_differences` function calculates pairwise m/z differences within retention time windows,
+and matches the differences to selected chemical groups. 
+Below is an example of the output:
 
 # A tibble: 6 × 5
 # Groups:   Window [1]
