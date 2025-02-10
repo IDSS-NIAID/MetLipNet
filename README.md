@@ -33,10 +33,15 @@ df_categorized %>%
   slice_head(n = 3) %>%
   print()
 
+# Apply function to calculate m/z differences and match to pre-determined chemical groups
+df_mz_differences_filtered <- calculate_mz_differences(df_categorized, selected_groups = c("17", "14", "28"))
+
+head(df_mz_differences_filtered)
+
 
 ## Expected Output
 
-The function will categorize data into overlapping retention time (RT) windows. Below is an example of the output:
+The `categorize_by_rt_window` function will categorize data into overlapping retention time (RT) windows. Below is an example of the output:
 
 # A tibble: 3 × 3 per Window
      RT    mz Window
@@ -53,4 +58,19 @@ The function will categorize data into overlapping retention time (RT) windows. 
 8  5.33  190.     3
 9  5.79  195.     3
 ...
+
+
+
+The `calculate_mz_differences` function calculates pairwise m/z differences within retention time windows and matches the differences to selected chemical groups. Below is an example of the output:
+
+# A tibble: 6 × 5
+# Groups:   Window [1]
+  Window   mz1   mz2 difference molecule_match
+   <int> <dbl> <dbl>      <dbl> <chr>         
+1      1  225.  211.         14 CH2           
+2      1  239.  211.         28 Carbonyl      
+3      1  164.  147.         17 Ammonia       
+4      1  165.  147.         17 Ammonia       
+5      1  161.  147.         14 CH2           
+6      1  183.  166.         17 Ammonia   
 
