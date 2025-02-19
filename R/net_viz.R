@@ -39,7 +39,7 @@ net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "netwo
     g <- graph_from_data_frame(graph_data, directed = TRUE)
     
     # Optimize layout for each window
-    best_layout <- optimize_network_layout_xgboost(g)
+    best_layout <- optimize_network_layout(g)
     
     plot_title <- paste("Network for RT Window", window)
     
@@ -56,5 +56,5 @@ net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "netwo
     ggsave(filename = file.path(output_dir, paste0("network_RT_Window_", window, ".jpeg")), plot = p, width = 30, height = 20)
   }
   
-  saveWorkbook(wb, output_xlsx, overwrite = TRUE)
+  openxlsx::saveWorkbook(wb, output_xlsx, overwrite = TRUE)
 }

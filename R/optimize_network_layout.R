@@ -48,7 +48,7 @@ optimize_network_layout <- function(g, n_samples = 50, n_bootstrap = 10, verbose
   
   total_samples <- length(parameters)
   plan(multisession)
-  results <- future_map(seq_along(parameters), function(i) {
+  results <- furrr::future_map(seq_along(parameters), function(i) {
     param <- parameters[[i]]
     layout_fn <- layouts[[param$layout]]
     
@@ -85,7 +85,7 @@ optimize_network_layout <- function(g, n_samples = 50, n_bootstrap = 10, verbose
     
     list(layout = g_layout, stress = stress_value, predicted_layout = names(layouts)[predicted_layout + 1])
   }, .options = furrr_options(seed = 31415926))
-  plan(sequential)
+  future::plan(sequential)
   
   results_df <- bind_rows(results)
   best_result <- results[[which.min(sapply(results, function(x) x$stress))]]
