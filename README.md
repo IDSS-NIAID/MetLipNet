@@ -105,6 +105,29 @@ net_viz(df_mz_differences_filtered)
 
 ```
 
+## Expected Network Plot Images
+
+# Retention Window 1
 
 ![Alt text](README_files/network_RT_Window_1.jpeg?raw=true)
+
+# Retention Window 2
+
+![Alt text](README_files/network_RT_Window_2.jpeg?raw=true)
+
+# Retention Window 3
+
+![Alt text](README_files/network_RT_Window_3.jpeg?raw=true)
+
+# Retention Window 4
+
+![Alt text](README_files/network_RT_Window_4.jpeg?raw=true)
+
+# Retention Window 5
+
+![Alt text](README_files/network_RT_Window_5.jpeg?raw=true)
+
+# Retention Window 6
+
+![Alt text](README_files/network_RT_Window_6.jpeg?raw=true)
 
