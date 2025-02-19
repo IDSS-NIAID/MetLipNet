@@ -8,10 +8,13 @@ To use these functions in your R environment:
 
 ```r
 # Install dependencies if not already installed
-install.packages(c("dplyr", "tidyr"))
+install.packages(c("dplyr", "tidyr", "igraph", "ggraph", "openxlsx"))
 
 library(dplyr)
 library(tidyr)
+library(igraph)
+library(ggraph)
+library(openxlsx)
 ```
 
 ## Data Simulation
