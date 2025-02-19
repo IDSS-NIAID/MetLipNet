@@ -99,7 +99,7 @@ Below is an example of the output:
 
 ```r
 # Apply function to generate network layouts for each RT window. Then, save the network data to an Excel file, 
-and produce network plots that are saved as JPEG files.
+# and produce network plots that are saved as JPEG files.
 
 net_viz(df_mz_differences_filtered)
 
