@@ -4,6 +4,7 @@
 #' and produces network plots that are saved as JPEG files.
 #'
 #' @param data A data frame containing network data with at least the columns: `Window`, `mz1`, `mz2`, and `molecule_match`.
+#' @param image_format Specify network image file format from: `.jpeg`, `.png`, `.tiff`, or `.svg`.
 #' @param output_xlsx Character. The name of the output Excel file where network data will be saved. Default is "network_data.xlsx".
 #' @param output_dir Character. The directory where network plots will be saved. Default is "network_plots".
 #'
@@ -21,7 +22,7 @@
 #' net_viz(sample_data)
 #'
 #' @export
-net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "network_plots") {
+net_viz <- function(data, image_format = ".jpeg", output_xlsx = "network_data.xlsx", output_dir = "network_plots") {
   dir.create(output_dir, showWarnings = FALSE)
   wb <- createWorkbook()
   
@@ -92,7 +93,7 @@ net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "netwo
     plot(p)
     
     # Save plot as JPEG
-    ggsave(filename = file.path(output_dir, paste0("network_RT_Window_", window, ".jpeg")), plot = p, width = 30, height = 20)
+    ggsave(filename = file.path(output_dir, paste0("network_RT_Window_", window, image_format)), plot = p, width = 30, height = 20)
   }
   
   openxlsx::saveWorkbook(wb, output_xlsx, overwrite = TRUE)
