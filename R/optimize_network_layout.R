@@ -23,12 +23,12 @@
 #' \dontrun{
 #'   library(igraph)
 #'   g <- erdos.renyi.game(100, p = 0.05)  # Generate a random network
-#'   best_layout <- optimize_network_layout_xgboost(g)
+#'   best_layout <- optimize_network_layout(g)
 #'   plot(g, layout = best_layout)
 #' }
 #'
 #' @export
-optimize_network_layout_xgboost <- function(g, n_samples = 50, n_bootstrap = 10, verbose = TRUE, seed = 31415926) {
+optimize_network_layout <- function(g, n_samples = 50, n_bootstrap = 10, verbose = TRUE, seed = 31415926) {
   layouts <- list(
     "fr" = igraph::layout_with_fr,
     "kk" = igraph::layout_with_kk,
