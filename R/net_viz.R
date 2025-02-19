@@ -44,12 +44,50 @@ net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "netwo
     plot_title <- paste("Network for RT Window", window)
     
     p <- ggraph(g, layout = best_layout) +
-      geom_edge_link(aes(color = edge_color), alpha = 0.8) +
-      geom_node_point(size = 5, color = "black") +
+      geom_edge_link(aes(color = factor(edge_color)), alpha = 0.8) +
+      geom_node_point(size = 6, color = "black") +
       geom_node_text(aes(label = name), repel = TRUE) +
-      scale_color_brewer(palette = "Dark2")+
-      theme_minimal() +
-      ggtitle(plot_title)
+      scale_edge_color_brewer(palette = "Dark2") +
+      ggtitle(plot_title)+
+      labs(edge_color = "Molecular Group") +
+      theme(
+
+        # Set legend background to transparent with no border
+        legend.background = element_rect(fill = "transparent", colour = NA),
+        
+        # Customize appearance of legend title
+        legend.title = element_text(size = 20),
+        
+        # Customize appearance of legend title
+        legend.text = element_text(size = 18),
+        
+        # Customize plot title
+        plot.title = element_text(hjust = 0.5, size = 28, color = 'black'), 
+        
+        # Customize appearance of x-axis text
+        axis.text.x = element_blank(),
+        
+        # Customize appearance of y-axis text
+        axis.text.y = element_blank(),
+        
+        # Customize axis ticks appearance
+        axis.ticks = element_blank(),
+        
+        # Set plot background to transparent with no border
+        plot.background = element_rect(fill = "transparent", colour = NA),
+        
+        # Customize the background of the panel (plot area)
+        panel.background = element_rect(fill = 'white'),
+        
+        # Customize panel border
+        panel.border = element_rect(colour = "black", fill=NA, size = 0.75),
+        
+        # Remove major gridlines
+        panel.grid.major = element_blank(),
+        
+        # Remove minor gridlines
+        panel.grid.minor = element_blank()
+      )
     
     plot(p)
     
