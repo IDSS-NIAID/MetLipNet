@@ -47,6 +47,7 @@ net_viz <- function(data, output_xlsx = "network_data.xlsx", output_dir = "netwo
       geom_edge_link(aes(color = edge_color), alpha = 0.8) +
       geom_node_point(size = 5, color = "black") +
       geom_node_text(aes(label = name), repel = TRUE) +
+      scale_color_brewer(palette = "Dark2")+
       theme_minimal() +
       ggtitle(plot_title)
     
