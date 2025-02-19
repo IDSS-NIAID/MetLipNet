@@ -94,3 +94,16 @@ Below is an example of the output:
 6      1  183.  166.         17 Ammonia   
 
 ```
+
+## Generate Network Visualization
+
+```r
+# Apply function to generate network layouts for each RT window. Then, save the network data to an Excel file, 
+and produce network plots that are saved as JPEG files.
+
+net_viz(df_mz_differences_filtered)
+
+```
+
+
+
