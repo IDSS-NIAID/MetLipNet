@@ -3,12 +3,5 @@
 export(calculate_mz_differences)
 export(categorize_by_rt_window)
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-export(optimize_network_layout)
-=======
->>>>>>> a5495a3bec3ad932d850b22e94082e0760140c72
->>>>>>> Stashed changes
 import(dplyr)
 import(tidyr)
