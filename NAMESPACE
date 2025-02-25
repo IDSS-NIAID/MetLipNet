@@ -2,6 +2,7 @@
 
 export(calculate_mz_differences)
 export(categorize_by_rt_window)
-
+export(net_viz)
+export(optimize_network_layout)
 import(dplyr)
 import(tidyr)
