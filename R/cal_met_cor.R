@@ -15,6 +15,7 @@
 #' @examples
 #' library(dplyr)
 #' library(rstatix)
+#' library(corrr)
 #' set.seed(123)
 #' df <- expand.grid(
 #'   metabolite = paste0("M", 1:50),
@@ -27,42 +28,61 @@
 #' @export
 cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "metabolite", method = "pearson", remove_na = TRUE, p_threshold = NULL) {
   if (nrow(data) < 2) {
-    return(tibble(metabolite1 = character(), metabolite2 = character(), estimate = numeric(), p_value = numeric()))
+    return(tibble(from = character(), to = character(), estimate = numeric(), p_value = numeric()))
   }
   
   # Identify metadata columns dynamically
   metadata_cols <- setdiff(names(data), c(intensity_col, identifier_col))
   
-  # Prepare intensity data in wide format for correlation
+  # Ensure identifier_col exists before transformation
+  if (!(identifier_col %in% names(data))) {
+    stop(paste("Identifier column", identifier_col, "not found in dataset"))
+  }
+  
+  # Pivot data so that metabolites are in columns and samples are in rows
   intensity_wide <- data %>%
-    pivot_wider(names_from = all_of(metadata_cols), values_from = all_of(intensity_col))
+    pivot_wider(names_from = identifier_col, values_from = intensity_col)
   
   # Remove rows with insufficient data for correlation if specified
   if (remove_na) {
     intensity_wide <- intensity_wide %>% drop_na()
   }
   
-  if (ncol(intensity_wide) <= 2) {
-    return(tibble(metabolite1 = character(), metabolite2 = character(), estimate = numeric(), p_value = numeric()))
+  # Ensure at least two metabolites exist for correlation
+  if (ncol(intensity_wide) < 3) {  # One column will be sample IDs, so we need at least two metabolite columns
+    warning("Not enough metabolites for correlation. Returning empty data frame.")
+    return(tibble(from = character(), to = character(), estimate = numeric(), p_value = numeric()))
   }
   
-  # Compute correlation matrix
-  cor_matrix <- cor_mat(intensity_wide %>% select(-all_of(identifier_col)), method = method)
+  # Remove rows with insufficient data for correlation if specified
+  if (remove_na) {
+    intensity_wide <- intensity_wide %>% drop_na()
+  }
   
-  # Extract p-values separately
-  p_matrix <- cor_test(intensity_wide %>% select(-all_of(identifier_col)), method = method) %>%
+  # Filter only numeric columns for correlation
+  numeric_cols <- intensity_wide %>% select(where(is.numeric))
+  
+  # Compute correlation matrix using corrr::correlate()
+  cor_matrix <- corrr::correlate(numeric_cols, method = method, use = "pairwise.complete.obs")
+  
+  # Extract p-values separately using rstatix::cor_test()
+  p_matrix <- rstatix::cor_test(numeric_cols, method = method)
+  if (!"var1" %in% names(p_matrix) || !"var2" %in% names(p_matrix)) {
+    stop("Unexpected column names in cor_test output")
+  }
+  
+  p_matrix <- p_matrix %>%
     select(var1, var2, p) %>%
-    rename(metabolite1 = var1, metabolite2 = var2, p_value = p)
+    rename(from = var1, to = var2, p_value = p)
   
   # Convert correlation matrix into long format
   cor_data <- cor_matrix %>%
-    cor_gather() %>%
-    rename(metabolite1 = var1, metabolite2 = var2, estimate = cor) %>%
-    filter(metabolite1 > metabolite2)
+    corrr::stretch() %>%
+    rename(from = x, to = y, estimate = r) %>%
+    filter(from > to)
   
   # Join correlation estimates and p-values
-  result <- left_join(cor_data, p_matrix, by = c("metabolite1", "metabolite2")) %>% 
-    select(-p_value)
+  result <- left_join(cor_data, p_matrix, by = c("from", "to"))
   
   # Apply p-value threshold if specified
   if (!is.null(p_threshold)) {
