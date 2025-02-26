@@ -36,6 +36,7 @@ and provides the correlation estimate and p-value for each pair.
 \examples{
 library(dplyr)
 library(rstatix)
+library(corrr)
 set.seed(123)
 df <- expand.grid(
   metabolite = paste0("M", 1:50),
