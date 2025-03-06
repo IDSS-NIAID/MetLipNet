@@ -73,7 +73,7 @@ dat_scaled <- dat %>%
 ?cal_met_cor
 
 # The returned data frame will be ready for the igraph function.
-dat_cor_result <- MetLipNet::cal_met_cor(dat_scaled, intensity_col = "Value_scaled", identifier_col = "Metabolite") #have to change to dat_scaled if want to use this data!!! Value raw to value scaled
+dat_cor_result <- MetLipNet::cal_met_cor(dat_scaled, intensity_col = "Value_scaled", identifier_col = "Metabolite",) #have to change to dat_scaled if want to use this data!!! Value raw to value scaled
 
 #### Correlation Data Export ####
 #write.csv(R_Data_Corr, file="Notarangelo0001 R vals pearson all v all.csv")#Option to write the R matrix to a csv. You can do the same thing for the p values for handling elsewhere if needed.
