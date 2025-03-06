@@ -73,7 +73,7 @@ dat_scaled <- dat %>%
 ?cal_met_cor
 
 # The returned data frame will be ready for the igraph function.
-dat_cor_result <- MetLipNet::cal_met_cor(dat_scaled, intensity_col = "Value_scaled", identifier_col = "Metabolite",) #have to change to dat_scaled if want to use this data!!! Value raw to value scaled
+dat_cor_result <- MetLipNet::cal_met_cor(dat_scaled, intensity_col = "Value_scaled", identifier_col = "Metabolite", max_workers = 13) #have to change to dat_scaled if want to use this data!!! Value raw to value scaled
 
 #### Correlation Data Export ####
 #write.csv(R_Data_Corr, file="Notarangelo0001 R vals pearson all v all.csv")#Option to write the R matrix to a csv. You can do the same thing for the p values for handling elsewhere if needed.
@@ -87,8 +87,8 @@ dat_cor_result <- MetLipNet::cal_met_cor(dat_scaled, intensity_col = "Value_scal
 dat_igraph <- dat_cor_result %>% 
   filter(p_value < 0.01) %>% 
   filter(estimate > 0.7) %>%
-  mutate(edge_color = case_when(estimate < 0 ~ "estimate>0",
-                                estimate > 0 ~ "estimate<0",
+  mutate(edge_color = case_when(estimate < 0 ~ "estimate<0",
+                                estimate > 0 ~ "estimate>0",
                                 TRUE ~ "grey"))
 
 
@@ -109,7 +109,7 @@ trim_g1 <- delete.vertices(trim_g, isoNodes)
 #### Optimize the network layout ####
 
 # function that relies on bootsrap sampling and XGBoost to predict the best layout
-best_layout <- MetLipNet::optimize_network_layout(trim_g1, n_samples = 80, n_bootstrap = 200)
+best_layout <- MetLipNet::optimize_network_layout(trim_g1, n_samples = 50, n_bootstrap = 100)
 
 
 #### Data Preparation for igraph network visualization ####
