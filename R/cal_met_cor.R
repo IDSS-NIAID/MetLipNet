@@ -9,8 +9,13 @@
 #' @param method Character. The correlation method to use. Options: "pearson", "spearman", "kendall". Default is "pearson".
 #' @param remove_na Logical. Whether to drop rows with NA values before correlation calculation. Default is TRUE.
 #' @param p_threshold Numeric. The p-value threshold for filtering results. Default is NULL (no filtering).
+#' @param max_workers Integer. The maximum number of parallel workers to use. Default is 4.
 #'
-#' @return A data frame containing pairwise Pearson correlation estimates and p-values.
+#' @return A tibble with columns:
+#'   \item{from}{Character. Name of the first metabolite in the correlation pair.}
+#'   \item{to}{Character. Name of the second metabolite in the correlation pair.}
+#'   \item{estimate}{Numeric. Correlation coefficient.}
+#'   \item{p_value}{Numeric. P-value of the correlation test.}
 #'
 #' @examples
 #' library(dplyr)
@@ -26,7 +31,7 @@
 #' cal_met_cor(df)
 #'
 #' @export
-cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "metabolite", method = "pearson", remove_na = TRUE, p_threshold = NULL) {
+cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "metabolite", method = "pearson", remove_na = TRUE, p_threshold = NULL, max_workers = 4) {
   if (nrow(data) < 2) {
     return(tibble(from = character(), to = character(), estimate = numeric(), p_value = numeric()))
   }
@@ -52,11 +57,6 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
   if (ncol(intensity_wide) < 3) {  # One column will be sample IDs, so we need at least two metabolite columns
     warning("Not enough metabolites for correlation. Returning empty data frame.")
     return(tibble(from = character(), to = character(), estimate = numeric(), p_value = numeric()))
-  }
-  
-  # Remove rows with insufficient data for correlation if specified
-  if (remove_na) {
-    intensity_wide <- intensity_wide %>% drop_na()
   }
   
   # Filter only numeric columns for correlation
