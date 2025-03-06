@@ -10,7 +10,8 @@ cal_met_cor(
   identifier_col = "metabolite",
   method = "pearson",
   remove_na = TRUE,
-  p_threshold = NULL
+  p_threshold = NULL,
+  max_workers = 4
 )
 }
 \arguments{
@@ -25,9 +26,15 @@ cal_met_cor(
 \item{remove_na}{Logical. Whether to drop rows with NA values before correlation calculation. Default is TRUE.}
 
 \item{p_threshold}{Numeric. The p-value threshold for filtering results. Default is NULL (no filtering).}
+
+\item{max_workers}{Integer. The maximum number of parallel workers to use. Default is 4.}
 }
 \value{
-A data frame containing pairwise Pearson correlation estimates and p-values.
+A tibble with columns:
+\item{from}{Character. Name of the first metabolite in the correlation pair.}
+\item{to}{Character. Name of the second metabolite in the correlation pair.}
+\item{estimate}{Numeric. Correlation coefficient.}
+\item{p_value}{Numeric. P-value of the correlation test.}
 }
 \description{
 This function calculates the metabolite pairwise correlations
