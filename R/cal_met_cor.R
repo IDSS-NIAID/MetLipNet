@@ -62,8 +62,18 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
   # Filter only numeric columns for correlation
   numeric_cols <- intensity_wide %>% select(where(is.numeric))
   
-  # Compute correlation matrix using corrr::correlate()
-  cor_matrix <- corrr::correlate(numeric_cols, method = method, use = "pairwise.complete.obs")
+  available_workers <- min(availableCores() - 1, max_workers)
+  if (available_workers < 1) available_workers <- 1
+  
+  plan(multisession, workers = available_workers)
+  
+  col_pairs <- combn(ncol(numeric_cols), 2, simplify = FALSE)
+  
+  cor_results <- future_map_dfr(col_pairs, function(pair) {
+    cor_test_result <- suppressMessages(suppressWarnings(
+      cor_test(data = numeric_cols, vars = colnames(numeric_cols)[pair[1]], vars2 = colnames(numeric_cols)[pair[2]], method = method)
+    ))
+  
   
   # Extract p-values separately using rstatix::cor_test()
   p_matrix <- rstatix::cor_test(numeric_cols, method = method)
