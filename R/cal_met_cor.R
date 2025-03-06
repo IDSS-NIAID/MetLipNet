@@ -85,10 +85,6 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
   
   plan(sequential)
   
-  p_matrix <- p_matrix %>%
-    select(var1, var2, p) %>%
-    rename(from = var1, to = var2, p_value = p)
-  
   if (!is.null(p_threshold)) {
     cor_results <- cor_results %>% filter(p_value <= p_threshold)
   }
