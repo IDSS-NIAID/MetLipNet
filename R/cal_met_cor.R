@@ -75,29 +75,23 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
     ))
   
   
-  # Extract p-values separately using rstatix::cor_test()
-  p_matrix <- rstatix::cor_test(numeric_cols, method = method)
-  if (!"var1" %in% names(p_matrix) || !"var2" %in% names(p_matrix)) {
-    stop("Unexpected column names in cor_test output")
-  }
+    tibble(
+      from = colnames(numeric_cols)[pair[1]],
+      to = colnames(numeric_cols)[pair[2]],
+      estimate = cor_test_result$cor,
+      p_value = cor_test_result$p
+    )
+  }, .options = furrr_options(seed = TRUE))
+  
+  plan(sequential)
   
   p_matrix <- p_matrix %>%
     select(var1, var2, p) %>%
     rename(from = var1, to = var2, p_value = p)
   
-  # Convert correlation matrix into long format
-  cor_data <- cor_matrix %>%
-    corrr::stretch() %>%
-    rename(from = x, to = y, estimate = r) %>%
-    filter(from > to)
-  
-  # Join correlation estimates and p-values
-  result <- left_join(cor_data, p_matrix, by = c("from", "to"))
-  
-  # Apply p-value threshold if specified
   if (!is.null(p_threshold)) {
-    result <- result %>% filter(p_value <= p_threshold)
+    cor_results <- cor_results %>% filter(p_value <= p_threshold)
   }
   
-  return(result)
+  return(cor_results)
 }
