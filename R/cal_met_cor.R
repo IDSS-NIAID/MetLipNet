@@ -73,7 +73,7 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
   
   cor_results <- future_map_dfr(col_pairs, function(pair) {
     cor_test_result <- suppressMessages(suppressWarnings(
-      cor_test(data = numeric_cols, vars = colnames(numeric_cols)[pair[1]], vars2 = colnames(numeric_cols)[pair[2]], method = method)
+      rstatix::cor_test(data = numeric_cols, vars = colnames(numeric_cols)[pair[1]], vars2 = colnames(numeric_cols)[pair[2]], method = method)
     ))
   
   
