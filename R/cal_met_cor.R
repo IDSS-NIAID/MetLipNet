@@ -50,7 +50,9 @@ cal_met_cor <- function(data, intensity_col = "intensity", identifier_col = "met
   
   # Remove rows with insufficient data for correlation if specified
   if (remove_na) {
-    intensity_wide <- intensity_wide %>% drop_na()
+    intensity_wide[is.na(intensity_wide) == TRUE] <- 0
+    missing_fraction <- colMeans(intensity_wide == 0)
+    intensity_wide <- intensity_wide[,missing_fraction < 0.25]
   }
   
   # Ensure at least two metabolites exist for correlation
