@@ -19,7 +19,10 @@
 #' @export
 #' @importFrom magrittr %>%
 cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", method = "pearson", cor_threshold = NULL, p_threshold = NULL) {
-
+  
+  # take care of annoying no visible binding notes
+  var1 <- var2 <- cor <- p <- NULL
+  
   # Ensure identifier_col exists before transformation
   if (!(identifier_col %in% names(data))) {
     stop(paste("Identifier column", identifier_col, "not found in dataset"))
@@ -35,7 +38,7 @@ cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", m
   data_corr_result <- Hmisc::rcorr(data_clean, type = method)
   
   # Flatten the correlation results
-  data_corr_flat <- cor_gather(data_corr_result) %>% 
+  data_corr_flat <- rstatix::cor_gather(data_corr_result) %>% 
     rename(from = var1, to = var2)
   
   # Apply correlation estimate and p-value thresholds
