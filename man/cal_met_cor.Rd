@@ -6,51 +6,32 @@
 \usage{
 cal_met_cor(
   data,
-  intensity_col = "intensity",
-  identifier_col = "metabolite",
+  meta_cols = NULL,
+  identifier_col = "Metabolite",
   method = "pearson",
-  remove_na = TRUE,
-  p_threshold = NULL,
-  max_workers = 4
+  cor_threshold = NULL,
+  p_threshold = NULL
 )
 }
 \arguments{
 \item{data}{A data frame containing metabolite names, intensity values, and metadata columns.}
 
-\item{intensity_col}{Character. The column name in \code{data} that contains intensity values. Default is "intensity".}
-
 \item{identifier_col}{Character. The column name that uniquely identifies metabolites. Default is "metabolite".}
 
 \item{method}{Character. The correlation method to use. Options: "pearson", "spearman", "kendall". Default is "pearson".}
 
-\item{remove_na}{Logical. Whether to drop rows with NA values before correlation calculation. Default is TRUE.}
+\item{cor_threshold}{Numeric. The absolute correlation estimate threshold for filtering results. Default is NULL (no filtering).}
 
 \item{p_threshold}{Numeric. The p-value threshold for filtering results. Default is NULL (no filtering).}
-
-\item{max_workers}{Integer. The maximum number of parallel workers to use. Default is 4.}
 }
 \value{
 A tibble with columns:
 \item{from}{Character. Name of the first metabolite in the correlation pair.}
 \item{to}{Character. Name of the second metabolite in the correlation pair.}
-\item{estimate}{Numeric. Correlation coefficient.}
-\item{p_value}{Numeric. P-value of the correlation test.}
+\item{cor}{Numeric. Correlation coefficient.}
+\item{p}{Numeric. P-value of the correlation test.}
 }
 \description{
 This function calculates the metabolite pairwise correlations
 and provides the correlation estimate and p-value for each pair.
-}
-\examples{
-library(dplyr)
-library(rstatix)
-library(corrr)
-set.seed(123)
-df <- expand.grid(
-  metabolite = paste0("M", 1:50),
-  condition = paste0("C", 1:3)
-) \%>\%
-  mutate(intensity = rnorm(n(), mean = 1000, sd = 200))
-
-cal_met_cor(df)
-
 }

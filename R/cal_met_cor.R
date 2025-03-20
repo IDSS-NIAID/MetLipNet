@@ -15,7 +15,6 @@
 #'   \item{cor}{Numeric. Correlation coefficient.}
 #'   \item{p}{Numeric. P-value of the correlation test.}
 #'
-#' @examples
 #'
 #' @export
 cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", method = "pearson", cor_threshold = NULL, p_threshold = NULL) {
