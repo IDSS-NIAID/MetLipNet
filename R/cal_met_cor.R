@@ -26,7 +26,7 @@ cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", m
   
   # Pre-process data
   data_clean <-data %>% 
-    select(-any_of(meta_data_names)) %>% 
+    select(-any_of(meta_cols)) %>% 
     t() %>% 
     janitor::row_to_names(row_number = 1)
   
