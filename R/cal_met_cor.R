@@ -17,6 +17,7 @@
 #'
 #'
 #' @export
+#' @importFrom magrittr %>%
 cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", method = "pearson", cor_threshold = NULL, p_threshold = NULL) {
 
   # Ensure identifier_col exists before transformation
