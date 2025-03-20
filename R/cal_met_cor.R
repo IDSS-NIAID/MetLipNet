@@ -31,7 +31,7 @@ cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", m
     janitor::row_to_names(row_number = 1)
   
   # Run the correlation
-  data_corr_result <- rcorr(data_clean, type = method)
+  data_corr_result <- rstatix::rcorr(data_clean, type = method)
   
   # Flatten the correlation results
   data_corr_flat <- cor_gather(data_corr_result) %>% 
