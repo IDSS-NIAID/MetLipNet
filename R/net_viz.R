@@ -22,7 +22,7 @@
 #' net_viz(sample_data)
 #'
 #' @export
-net_viz <- function(data, image_format = ".jpeg", output_xlsx = "network_data.xlsx", output_dir = "network_plots") {
+net_viz <- function(data, image_format = ".jpeg", output_xlsx = "network_data.xlsx", output_dir = "network_plots", similarity_levels = similarity_levels, similarity_colors = similarity_colors) {
   dir.create(output_dir, showWarnings = FALSE)
   wb <- createWorkbook()
   
@@ -39,6 +39,8 @@ net_viz <- function(data, image_format = ".jpeg", output_xlsx = "network_data.xl
     graph_data <- data.frame(from = round(window_data$mz1, 0), to = round(window_data$mz2, 0), edge_color = window_data$molecule_match)
     g <- graph_from_data_frame(graph_data, directed = TRUE)
     
+    E(g)$edge_color <- factor(E(g)$edge_color, levels = similarity_levels)
+    
     # Optimize layout for each window
     best_layout <- optimize_network_layout(g)
     
@@ -48,7 +50,7 @@ net_viz <- function(data, image_format = ".jpeg", output_xlsx = "network_data.xl
       geom_edge_link(aes(color = factor(edge_color)), alpha = 0.8) +
       geom_node_point(size = 6, color = "black") +
       geom_node_text(aes(label = name), repel = TRUE) +
-      scale_edge_color_brewer(palette = "Dark2") +
+      scale_edge_color_manual(values = similarity_colors) +
       ggtitle(plot_title)+
       labs(edge_color = "Molecular Group") +
       theme(

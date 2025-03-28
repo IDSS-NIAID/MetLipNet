@@ -16,9 +16,9 @@ calculate_mz_differences <- function(data, mz_col = "mz", window_col = "Window",
   known_differences <- c(
     "17" = "Ammonia", "14" = "CH2", "28" = "Carbonyl", "58" = "Aldehyde", "60" = "Alcohol or Ether",
     "15" = "Methyl (-CH3)", "16" = "Hydroxyl or Amine", "45" = "Carboxyl (-COOH)",
-    "32" = "Sulfur (-S)", "80" = "Phosphate (-HPO3)", "96" = "Sulfate (-SO4)",
+    "32" = "NFK-TRYP", "32" = "Sulfur (-S)", "80" = "Phosphate (-HPO3)", "96" = "Sulfate (-SO4)",
     "91" = "Benzyl (-C6H5CH2)", "77" = "Phenyl (-C6H5)", "42" = "Acetyl (-COCH3)",
-    "44" = "CO2", "32" = "NFK-TRYP", "28" = "NFK-KYN", "19" = "KYN-KYN Acid", "57" = "3OHKYN-Q Acid",
+    "44" = "CO2",  "19" = "KYN-KYN Acid", "57" = "3OHKYN-Q Acid",
     "87" = "NAD-Q Acid", "19" = "3OHKYN-Xan Acid"
   )
   
