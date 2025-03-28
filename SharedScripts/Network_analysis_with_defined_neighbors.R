@@ -30,6 +30,7 @@ layout <- layout_with_fr(g)
 
 # Plot the ego graph
 plot(subg,
+     layout = layout,
      vertex.label = V(subg)$name,
      vertex.size = 15,
      vertex.color = ifelse(V(subg)$name == center_node, "red", "lightblue"),
