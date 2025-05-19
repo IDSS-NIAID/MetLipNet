@@ -26,12 +26,16 @@ subg <- induced_subgraph(g, ego_nodes)
 # defining the layout external to the plot function with the seed set ensures the resulting plot 
 # will look the same every time it is regenerated
 set.seed(3.14)
-layout <- layout_with_fr(g)
+layout <- layout_with_fr(subg)
 
 # Plot the ego graph
 plot(subg,
      layout = layout,
+<<<<<<< Updated upstream
      vertex.label = V(subg)$name,
+=======
+          vertex.label = V(subg)$name,
+>>>>>>> Stashed changes
      vertex.size = 15,
      vertex.color = ifelse(V(subg)$name == center_node, "red", "lightblue"),
      vertex.label.cex = 0.8,
