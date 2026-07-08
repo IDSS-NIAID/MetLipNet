@@ -23,11 +23,11 @@ cal_met_cor <- function(data, meta_cols = NULL, identifier_col = "Metabolite", m
   # take care of annoying no visible binding notes
   var1 <- var2 <- cor <- p <- NULL
   
-  # Ensure identifier_col exists before transformation
+  Ensure identifier_col exists before transformation
   if (!(identifier_col %in% names(data))) {
     stop(paste("Identifier column", identifier_col, "not found in dataset"))
   }
-  
+
   # Pre-process data
   data_clean <-data %>% 
     select(-any_of(meta_cols)) %>% 
